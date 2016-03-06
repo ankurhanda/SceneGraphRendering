@@ -14,8 +14,8 @@ namespace SceneGraph {
 class GLText : public GLObject {
  public:
   static pangolin::GlFont& GetFont() {
-    static pangolin::GlFont s_font;
-    return s_font;
+    //static pangolin::GlFont s_font;
+    return pangolin::GlFont::I();//s_font;
   }
 
   /////////////////////////////////

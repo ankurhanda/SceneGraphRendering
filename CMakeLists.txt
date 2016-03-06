@@ -61,6 +61,9 @@ else()
 endif()
 
 
+list(APPEND REQUIRED_LIBRARIES "/usr/lib/x86_64-linux-gnu/libglut.so" )
+
+
 ################################################################################
 # Specify source files
 
