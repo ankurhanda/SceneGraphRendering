@@ -18,6 +18,19 @@ sudo make install
 
 #Rendering RGB-D Video 
 
+untar bedroom1.tgz in the **data** directory
+
+```
+tar -xvzf bedroom1.tgz
+```
+
+untar tex_lib.tgz in the **texture_library_samples** directory
+
+```
+tar -xvzf tex_lib.tgz
+```
+
+
 in your build run 
 
 ```
