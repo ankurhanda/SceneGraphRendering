@@ -20,13 +20,15 @@
 
 #include "utils/map_object_label2training_label.h"
 
+#define GENERATE_RGBD_VIDEO
 
 using namespace std;
 using namespace pangolin;
 
 void Usage() {
-    cout << "Usage: ModelViewer filename" << endl;
+    cout << "Usage: ./TextureRender ../data/bedroom1.obj" << endl;
 }
+
 
 int main( int argc, char* argv[] )
 {
@@ -99,9 +101,6 @@ int main( int argc, char* argv[] )
         max_label = std::max(max_label, training_label);
     }
 
-
-//    TooN::Matrix<Dynamic, Dynamic> colours(max_label, 3);
-
     Eigen::MatrixXd colours(max_label,3);
     std::map<int, int>colour2indexMap;
 
@@ -133,7 +132,6 @@ int main( int argc, char* argv[] )
         renderingColours(i,1) = colours(training_label,1);
         renderingColours(i,2) = colours(training_label,2);
     }
-
 
 
     // Scenegraph to hold GLObjects and relative transformations
@@ -201,9 +199,14 @@ int main( int argc, char* argv[] )
 
 //    bedroom1_poses_0_interpolated.txt
 
-    sprintf(trajectory_fileName,"%s/%s_poses_0.txt",
+    std::cout<<"data_dir = " << data_dir << std::endl;
+    std::cout<<"obj_basename = " << obj_basename << std::endl;
+
+    sprintf(trajectory_fileName,"%s/%s_trajectory.txt",
             data_dir.c_str(),
             obj_basename.c_str());
+
+    std::cout<<"Trajectory_fileName = " << trajectory_fileName << std::endl;
 
     ifstream SE3PoseFile(trajectory_fileName);
 
@@ -421,8 +424,6 @@ int main( int argc, char* argv[] )
             pangolin::FinishFrame();
         }
 
-        // Pause for 1/60th of a second.
-//        std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
     }
 
     return 0;
