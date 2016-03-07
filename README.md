@@ -15,3 +15,13 @@ cd build
 cmake .. && make -j8 
 
 sudo make install
+
+#Rendering RGB-D Video 
+
+in your build run 
+
+```
+./Examples/TextureRender/TextureRender ../data/bedroom1.obj 
+```
+
+The output files are written in the **../data/bedroom1_data** folder
