@@ -7,6 +7,9 @@
 #include <pangolin/display.h>
 #include <SceneGraph/SceneGraph.h>
 
+#include <assimp/postprocess.h>
+#include <assimp/Exporter.hpp>
+
 using namespace std;
 using namespace pangolin;
 
@@ -16,23 +19,26 @@ void Usage() {
 
 int main( int argc, char* argv[] )
 {
-    if(argc != 2) {
-        Usage();
-        exit(-1);
-    }
+//    if(argc != 2) {
+//        Usage();
+//        exit(-1);
+//    }
 
-    std::string obj_basename(argv[1]);
-    std::size_t find_dot   = obj_basename.find(".obj");
-    std::size_t find_slash = obj_basename.find_last_of('/');
+//    std::string obj_basename(argv[1]);
+//    std::size_t find_dot   = obj_basename.find(".obj");
+//    std::size_t find_slash = obj_basename.find_last_of('/');
 
-    std::cout<<"  find_dot = " << find_dot << std::endl;
-    std::cout<<"find_slash = " << find_slash << std::endl;
+//    std::cout<<"  find_dot = " << find_dot << std::endl;
+//    std::cout<<"find_slash = " << find_slash << std::endl;
 
-    obj_basename = obj_basename.substr(find_slash+1,find_dot-find_slash-1);
+//    obj_basename = obj_basename.substr(find_slash+1,find_dot-find_slash-1);
 
-    std::string data_dir = "../data/" + obj_basename + "_data";
+//    std::string data_dir = "../data/" + obj_basename + "_data";
 
-    const std::string model_filename(argv[1]);
+
+
+
+    const std::string model_filename = "/home/dysondemo/workspace/code/jack-daniels/model.obj";
 
     // Create OpenGL window in single line thanks to GLUT
     pangolin::CreateWindowAndBind("Main",640,480);
@@ -58,6 +64,17 @@ int main( int argc, char* argv[] )
     SceneGraph::GLMesh glMesh;
     try {
         glMesh.Init(model_filename);
+
+        const struct aiScene* meshtoExport = glMesh.GetScene();
+
+//        http://assimp.sourceforge.net/lib_html/class_assimp_1_1_exporter.html
+
+        Assimp::Exporter *exporter = new Assimp::Exporter();
+//        exportFormatDesc = exporter->GetExportFormatDescription(0);
+
+        /// Change the material file (.mtl) to have relative path for textures.
+        exporter->Export(meshtoExport, "obj", "model_assimp.obj");
+
         glGraph.AddChild(&glMesh);
         bbox = glMesh.ObjectAndChildrenBounds();
     }catch(exception e) {
@@ -127,3 +144,6 @@ int main( int argc, char* argv[] )
 
     return 0;
 }
+
+
+
